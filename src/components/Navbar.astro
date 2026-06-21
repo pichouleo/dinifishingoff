@@ -1,6 +1,7 @@
 ---
 import type { Locale } from '../types';
 import { t } from '../lib/i18n';
+import Logo from './Logo.astro';
 
 interface Props {
   locale: Locale;
@@ -22,59 +23,66 @@ const current = Astro.url.pathname;
 
 <nav
   id="df-nav"
-  class="fixed top-0 left-0 right-0 z-50 h-[72px] flex items-center transition-all duration-300"
+  class="fixed top-0 left-0 right-0 z-50 h-[80px] flex items-center transition-all duration-300"
   aria-label="Navigation principale"
 >
-  <div class="df-container w-full flex items-center gap-8">
-    <!-- Logo -->
-    <a href="/" class="flex-shrink-0 leading-none" aria-label="Dini Fishing — Accueil">
-      <span class="font-['Georgia',serif] italic text-[var(--color-df-cream)] text-[1.35rem]">Dini</span><span
-        class="df-bebas text-[var(--color-df-red)] text-[1.5rem] tracking-widest ml-0.5">FISHING</span
-      >
+  <div class="df-container w-full flex items-center gap-6">
+
+    <!-- Logo badge + texte -->
+    <a href="/" class="flex items-center gap-3 flex-shrink-0" aria-label="Dini Fishing — Accueil">
+      <Logo size={52} />
+      <div class="hidden sm:flex flex-col leading-none">
+        <span class="font-['Georgia',serif] italic text-[var(--color-df-cream)] text-[1.1rem] leading-tight">Dini</span>
+        <span class="df-bebas text-[var(--color-df-red)] text-[1.25rem] tracking-[0.15em] leading-tight">FISHING</span>
+      </div>
     </a>
 
     <!-- Desktop links -->
-    <div class="hidden lg:flex items-center gap-7 ml-auto">
-      {
-        links.map(({ key, href }) => (
-          <a
-            href={href}
-            class:list={[
-              'text-[0.78rem] font-medium tracking-[0.1em] uppercase transition-colors duration-200 relative pb-0.5',
-              'after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-px after:bg-[var(--color-df-red)] after:scale-x-0 after:transition-transform after:duration-200',
-              current === href || (href !== '/' && current.startsWith(href))
-                ? 'text-[var(--color-df-cream)] after:scale-x-100'
-                : 'text-[rgba(245,240,232,0.7)] hover:text-[var(--color-df-cream)] hover:after:scale-x-100',
-            ]}
-          >
-            {t(locale, key)}
-          </a>
-        ))
-      }
+    <div class="hidden lg:flex items-center gap-6 ml-auto">
+      {links.map(({ key, href }) => (
+        <a
+          href={href}
+          class:list={[
+            'text-[0.76rem] font-semibold tracking-[0.12em] uppercase transition-colors duration-200 relative pb-0.5',
+            'after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-[var(--color-df-red)] after:scale-x-0 after:transition-transform after:duration-200',
+            current === href || (href !== '/' && current.startsWith(href))
+              ? 'text-white after:scale-x-100'
+              : 'text-[rgba(245,240,232,0.65)] hover:text-white hover:after:scale-x-100',
+          ]}
+        >
+          {t(locale, key)}
+        </a>
+      ))}
     </div>
 
     <!-- Actions -->
-    <div class="hidden lg:flex items-center gap-4 flex-shrink-0 ml-6">
-      <!-- Lang switcher -->
-      <div class="flex gap-1" aria-label="Langue">
+    <div class="hidden lg:flex items-center gap-3 flex-shrink-0 ml-4">
+      <div class="flex gap-0.5 bg-white/5 rounded-sm p-0.5" aria-label="Langue">
         {(['fr', 'en', 'es'] as Locale[]).map((lang) => (
           <button
             data-lang={lang}
             class:list={[
-              'text-[0.72rem] font-semibold tracking-wider uppercase px-1.5 py-1 rounded-sm transition-all duration-200 cursor-pointer',
+              'text-[0.68rem] font-bold tracking-wider uppercase px-2 py-1 rounded-sm transition-all duration-200 cursor-pointer',
               lang === locale
-                ? 'text-[var(--color-df-cream)] bg-white/10'
-                : 'text-[rgba(245,240,232,0.45)] hover:text-[var(--color-df-cream)]',
+                ? 'bg-[var(--color-df-red)] text-white'
+                : 'text-[rgba(245,240,232,0.5)] hover:text-white',
             ]}
-            aria-label={lang.toUpperCase()}
-          >
-            {lang.toUpperCase()}
-          </button>
+          >{lang.toUpperCase()}</button>
         ))}
       </div>
+      <!-- WhatsApp dans nav -->
+      <a
+        href="https://wa.me/33668178743"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden xl:inline-flex items-center gap-2 px-4 py-2 bg-[#25D366] text-white text-[0.72rem] font-bold tracking-wider uppercase rounded-sm hover:bg-[#1ebe5a] transition-all"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        +33 6 68 17 87 43
+      </a>
       <a
         href="/contact"
-        class="inline-flex items-center px-6 py-3 bg-[var(--color-df-red)] text-white text-[0.8rem] font-semibold tracking-[0.06em] uppercase rounded-sm transition-all duration-200 hover:bg-[var(--color-df-red-dark)] hover:-translate-y-px hover:shadow-[0_6px_24px_rgba(192,57,43,0.4)]"
+        class="inline-flex items-center px-5 py-2.5 bg-[var(--color-df-red)] text-white text-[0.75rem] font-bold tracking-[0.1em] uppercase rounded-sm transition-all hover:bg-[var(--color-df-red-dark)] hover:-translate-y-px hover:shadow-[0_4px_20px_rgba(192,57,43,0.5)]"
       >
         {t(locale, 'nav_book')}
       </a>
@@ -97,41 +105,36 @@ const current = Astro.url.pathname;
 <!-- Mobile menu -->
 <div
   id="df-mobile-menu"
-  class="fixed top-[72px] left-0 right-0 z-40 hidden flex-col gap-1 bg-[rgba(10,10,10,0.98)] backdrop-blur-lg border-t border-[var(--color-df-border)] px-6 py-6"
+  class="fixed top-[80px] left-0 right-0 z-40 hidden flex-col gap-0 bg-[rgba(8,8,8,0.99)] backdrop-blur-lg border-t-2 border-[var(--color-df-red)] px-6 py-5"
   role="dialog"
   aria-label="Menu mobile"
 >
-  {
-    links.map(({ key, href }) => (
-      <a
-        href={href}
-        class="py-3 text-[0.9rem] font-medium tracking-[0.1em] uppercase text-[rgba(245,240,232,0.8)] border-b border-[var(--color-df-border)] hover:text-[var(--color-df-cream)] transition-colors"
-      >
-        {t(locale, key)}
-      </a>
-    ))
-  }
-  <div class="flex gap-2 mt-4">
+  {links.map(({ key, href }) => (
+    <a
+      href={href}
+      class="py-3.5 text-[0.875rem] font-semibold tracking-[0.12em] uppercase text-[rgba(245,240,232,0.75)] border-b border-white/5 hover:text-white hover:pl-2 transition-all"
+    >{t(locale, key)}</a>
+  ))}
+  <a
+    href="https://wa.me/33668178743"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="mt-4 flex items-center gap-2 px-5 py-3 bg-[#25D366] text-white text-sm font-bold tracking-wider uppercase rounded-sm w-full justify-center"
+  >
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    +33 6 68 17 87 43
+  </a>
+  <div class="flex gap-1.5 mt-3">
     {(['fr', 'en', 'es'] as Locale[]).map((lang) => (
       <button
         data-lang={lang}
         class:list={[
-          'text-[0.72rem] font-semibold tracking-wider uppercase px-2 py-1.5 rounded-sm transition-all duration-200 cursor-pointer',
-          lang === locale
-            ? 'text-[var(--color-df-cream)] bg-white/10'
-            : 'text-[rgba(245,240,232,0.45)] hover:text-[var(--color-df-cream)]',
+          'text-[0.7rem] font-bold tracking-wider uppercase px-3 py-1.5 rounded-sm transition-all cursor-pointer',
+          lang === locale ? 'bg-[var(--color-df-red)] text-white' : 'bg-white/5 text-[rgba(245,240,232,0.5)] hover:text-white',
         ]}
-      >
-        {lang.toUpperCase()}
-      </button>
+      >{lang.toUpperCase()}</button>
     ))}
   </div>
-  <a
-    href="/contact"
-    class="mt-4 self-start inline-flex items-center px-6 py-3 bg-[var(--color-df-red)] text-white text-[0.8rem] font-semibold tracking-[0.06em] uppercase rounded-sm"
-  >
-    {t(locale, 'nav_book')}
-  </a>
 </div>
 
 <script>
@@ -139,17 +142,19 @@ const current = Astro.url.pathname;
   const burger = document.getElementById('df-burger');
   const menu = document.getElementById('df-mobile-menu');
 
-  // Scroll effect
   window.addEventListener('scroll', () => {
     if (!nav) return;
     if (window.scrollY > 40) {
-      nav.classList.add('bg-[rgba(10,10,10,0.96)]', 'shadow-[0_1px_0_rgba(255,255,255,0.07)]', 'backdrop-blur-xl');
+      nav.style.background = 'rgba(5,5,5,0.97)';
+      nav.style.borderBottom = '1px solid rgba(192,57,43,0.3)';
+      nav.style.backdropFilter = 'blur(16px)';
     } else {
-      nav.classList.remove('bg-[rgba(10,10,10,0.96)]', 'shadow-[0_1px_0_rgba(255,255,255,0.07)]', 'backdrop-blur-xl');
+      nav.style.background = '';
+      nav.style.borderBottom = '';
+      nav.style.backdropFilter = '';
     }
   }, { passive: true });
 
-  // Burger toggle
   burger?.addEventListener('click', () => {
     const open = menu?.classList.toggle('hidden') === false;
     menu?.classList.toggle('flex', open);
@@ -160,11 +165,10 @@ const current = Astro.url.pathname;
       spans[1].style.opacity = '0';
       spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
     } else {
-      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+      spans.forEach((s: HTMLElement) => { s.style.transform = ''; s.style.opacity = ''; });
     }
   });
 
-  // Close on link click
   menu?.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       menu.classList.add('hidden');

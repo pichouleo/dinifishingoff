@@ -1,11 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WhatsAppBanner from '../components/WhatsAppBanner.astro';
+import Logo from '../components/Logo.astro';
 import { t } from '../lib/i18n';
 import { SPECIES } from '../lib/data';
 import type { Locale } from '../types';
 
 const locale: Locale = 'fr';
+
+const features = [
+  { icon: '📍', title: 'Nature préservée', sub: 'Valdecaballeros' },
+  { icon: '⛵', title: 'Séjours à la carte', sub: 'Adapté à vos envies' },
+  { icon: '🤝', title: 'Expérience', sub: 'Passion & bonne humeur' },
+];
 ---
 
 <BaseLayout
@@ -15,56 +22,168 @@ const locale: Locale = 'fr';
 >
 
   <!-- ======================================================
-       HERO
+       HERO PRINCIPAL
        ====================================================== -->
-  <section class="relative min-h-screen flex items-center overflow-hidden">
+  <section class="relative min-h-screen flex flex-col overflow-hidden">
+
+    <!-- Photo de fond -->
     <div
-      class="absolute inset-0 bg-cover bg-center scale-[1.04] transition-transform duration-[8s] hover:scale-100"
-      style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=1800&q=80'); filter: brightness(0.45);"
+      class="absolute inset-0"
+      style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=1800&q=80'); background-size: cover; background-position: center 30%;"
     ></div>
-    <div class="absolute inset-0 bg-gradient-to-b from-[rgba(10,10,10,0.3)] via-[rgba(10,10,10,0.1)] to-[rgba(10,10,10,0.8)]"></div>
-    <div class="df-container relative z-10 pt-[72px]">
-      <span class="df-label">Valdecaballeros · Extremadura · España</span>
-      <h1 class="df-bebas text-[clamp(4rem,12vw,9rem)] leading-[0.9] text-white">
-        DINI<br /><span class="text-[var(--color-df-red)]">FISHING</span>
-      </h1>
-      <p class="mt-5 text-[clamp(1rem,2.5vw,1.35rem)] font-light tracking-[0.08em] uppercase text-[rgba(245,240,232,0.85)] max-w-[560px]">
-        {t(locale, 'hero_subtitle')}
-      </p>
-      <div class="flex flex-wrap gap-3 mt-10">
-        <a href="/sejours" class="inline-flex items-center px-8 py-3.5 bg-[var(--color-df-red)] text-white text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:bg-[var(--color-df-red-dark)] hover:-translate-y-px hover:shadow-[0_6px_24px_rgba(192,57,43,0.4)]">
-          {t(locale, 'hero_cta1')}
+
+    <!-- Overlays progressifs -->
+    <div class="absolute inset-0 bg-[rgba(0,0,0,0.55)]"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[rgba(5,5,5,1)] via-[rgba(5,5,5,0.15)] to-[rgba(5,5,5,0.4)]"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-[rgba(5,5,5,0.7)] via-transparent to-[rgba(5,5,5,0.2)]"></div>
+
+    <!-- Contenu principal -->
+    <div class="df-container relative z-10 flex flex-col flex-1 pt-[100px] pb-0 justify-center">
+
+      <!-- Badge logo + localisation -->
+      <div class="flex items-center gap-4 mb-6">
+        <Logo size={72} />
+        <div>
+          <p class="text-[var(--color-df-red)] text-[0.7rem] font-bold tracking-[0.25em] uppercase mb-1">Guide de pêche officiel</p>
+          <p class="text-[rgba(245,240,232,0.6)] text-[0.75rem] tracking-[0.15em] uppercase">Valdecaballeros · Extremadura · España</p>
+        </div>
+      </div>
+
+      <!-- Titre massif -->
+      <div class="mb-2">
+        <h1 class="df-bebas leading-[0.88] text-white" style="font-size: clamp(4.5rem, 14vw, 11rem); text-shadow: 0 4px 40px rgba(0,0,0,0.6);">
+          DINI<br />
+          <span class="text-[var(--color-df-red)]">FISHING</span>
+        </h1>
+      </div>
+
+      <!-- Ligne EXTREMADURA avec tirets décoratifs -->
+      <div class="flex items-center gap-3 mb-6">
+        <span class="block h-px flex-1 max-w-[60px] bg-[var(--color-df-red)]"></span>
+        <span class="text-[var(--color-df-cream)] text-[0.8rem] font-semibold tracking-[0.35em] uppercase">Extremadura</span>
+        <span class="block h-px flex-1 max-w-[60px] bg-[var(--color-df-red)]"></span>
+      </div>
+
+      <!-- Sous-titre impactant -->
+      <div class="mb-8">
+        <p class="df-bebas text-white leading-none" style="font-size: clamp(1.6rem, 4vw, 3rem);">
+          Séjours dédiés
+        </p>
+        <p class="df-bebas text-[var(--color-df-red)] leading-none italic" style="font-size: clamp(1.6rem, 4vw, 3rem);">
+          aux carnassiers
+        </p>
+      </div>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap gap-3 mb-10 md:mb-0">
+        <a
+          href="/sejours"
+          class="inline-flex items-center gap-2 px-8 py-4 bg-[var(--color-df-red)] text-white font-bold tracking-[0.1em] uppercase text-sm rounded-sm transition-all hover:bg-[var(--color-df-red-dark)] hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(192,57,43,0.5)]"
+        >
+          Découvrir les séjours
         </a>
-        <a href="/contact" class="inline-flex items-center px-8 py-3.5 bg-transparent text-[var(--color-df-cream)] border border-[rgba(245,240,232,0.35)] text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:border-[var(--color-df-cream)] hover:bg-[rgba(245,240,232,0.06)] hover:-translate-y-px">
-          {t(locale, 'hero_cta2')}
+        <a
+          href="https://wa.me/33668178743"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-8 py-4 bg-[#25D366] text-white font-bold tracking-[0.1em] uppercase text-sm rounded-sm transition-all hover:bg-[#1ebe5a] hover:-translate-y-0.5"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Contacter sur WhatsApp
         </a>
       </div>
     </div>
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[rgba(245,240,232,0.45)] text-[0.7rem] tracking-[0.2em] uppercase animate-bounce" aria-hidden="true">
-      <span>{t(locale, 'hero_scroll')}</span>
-      <span class="block w-px h-10 bg-gradient-to-b from-[rgba(245,240,232,0.4)] to-transparent"></span>
+
+    <!-- BANDEAU INFO — fidèle aux visuels client -->
+    <div class="relative z-10 mt-auto">
+      <!-- Strip espèces -->
+      <div class="bg-[rgba(0,0,0,0.7)] border-t border-[rgba(192,57,43,0.3)] py-3">
+        <div class="df-container">
+          <p class="df-bebas text-center tracking-[0.3em] text-[rgba(245,240,232,0.7)]" style="font-size: clamp(0.9rem, 2vw, 1.1rem);">
+            Brochet
+            <span class="text-[var(--color-df-red)] mx-3">·</span>
+            Black Bass
+            <span class="text-[var(--color-df-red)] mx-3">·</span>
+            Sandre
+            <span class="text-[var(--color-df-red)] mx-3">·</span>
+            Barbeau Comizo
+          </p>
+        </div>
+      </div>
+
+      <!-- Bandeau 3 arguments + WhatsApp -->
+      <div class="bg-[rgba(5,5,5,0.92)] border-t-2 border-[var(--color-df-red)]">
+        <div class="df-container">
+          <div class="flex flex-col md:flex-row">
+            <!-- 3 arguments -->
+            <div class="flex flex-col sm:flex-row flex-1 divide-y sm:divide-y-0 sm:divide-x divide-[rgba(255,255,255,0.06)]">
+              {features.map(({ icon, title, sub }) => (
+                <div class="flex items-center gap-3 px-6 py-4 flex-1">
+                  <span class="text-2xl flex-shrink-0">{icon}</span>
+                  <div>
+                    <p class="text-[var(--color-df-cream)] text-[0.72rem] font-bold tracking-[0.15em] uppercase">{title}</p>
+                    <p class="text-[rgba(245,240,232,0.5)] text-[0.65rem] tracking-[0.1em] uppercase">{sub}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <!-- Bloc WhatsApp rouge -->
+            <a
+              href="https://wa.me/33668178743"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-3 bg-[var(--color-df-red)] px-8 py-4 hover:bg-[var(--color-df-red-dark)] transition-colors group flex-shrink-0"
+            >
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <div>
+                <p class="text-white font-bold text-[1.05rem] leading-tight tracking-wide">+33 6 68 17 87 43</p>
+                <p class="text-[rgba(255,255,255,0.75)] text-[0.65rem] tracking-[0.12em] uppercase">WhatsApp disponible</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ======================================================
-       ARGUMENTS
+       PRÉSENTATION / ARGUMENTS ÉTENDUS
        ====================================================== -->
-  <section class="bg-[var(--color-df-card)] border-t border-b border-[var(--color-df-border)]" aria-label="Nos atouts">
+  <section class="df-section bg-[var(--color-df-card)] border-b border-[var(--color-df-border)]">
     <div class="df-container">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-[var(--color-df-border)]">
-        {[
-          { icon: '🌿', titleKey: 'feat1_title' as const, descKey: 'feat1_desc' as const },
-          { icon: '🎣', titleKey: 'feat2_title' as const, descKey: 'feat2_desc' as const },
-          { icon: '🗓',  titleKey: 'feat3_title' as const, descKey: 'feat3_desc' as const },
-          { icon: '😄', titleKey: 'feat4_title' as const, descKey: 'feat4_desc' as const },
-        ].map(({ icon, titleKey, descKey }, i) => (
-          <div class:list={['flex flex-col gap-3 py-10', i > 0 ? 'lg:pl-10' : '']}>
-            <div class="w-12 h-12 bg-[rgba(192,57,43,0.12)] rounded flex items-center justify-center text-xl" aria-hidden="true">{icon}</div>
-            <h3 class="df-bebas text-xl">{t(locale, titleKey)}</h3>
-            <p class="text-sm text-[rgba(245,240,232,0.75)]">{t(locale, descKey)}</p>
-          </div>
-        ))}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="df-label">Qui sommes-nous ?</span>
+          <h2 class="df-bebas text-[clamp(2rem,5vw,3.8rem)] leading-none mb-4">
+            Un guide.<br />
+            <span class="text-[var(--color-df-red)]">Une passion.</span><br />
+            Une destination.
+          </h2>
+          <div class="df-divider"></div>
+          <p class="text-[rgba(245,240,232,0.8)] mb-4">
+            Dini Fishing, c'est des séjours de pêche guidés au cœur de l'Extremadura sauvage, en Espagne. Une région peu connue des pêcheurs français, mais qui regorge de carnassiers exceptionnels dans des eaux préservées.
+          </p>
+          <p class="text-[rgba(245,240,232,0.8)] mb-8">
+            Brochet, Black Bass, Sandre, Barbeau Comizo — chaque sortie est une expérience unique, guidée par un passionné qui connaît chaque crique, chaque spot, chaque technique qui fait la différence.
+          </p>
+          <a href="/sejours" class="inline-flex items-center gap-2 px-8 py-4 bg-[var(--color-df-red)] text-white font-bold tracking-[0.1em] uppercase text-sm rounded-sm transition-all hover:bg-[var(--color-df-red-dark)] hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(192,57,43,0.4)]">
+            Voir les séjours →
+          </a>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          {[
+            { icon: '🌿', title: 'Nature préservée', desc: "Lacs et rivières sauvages loin des foules" },
+            { icon: '🎣', title: 'Guide expert', desc: "Chaque spot, chaque technique maîtrisés" },
+            { icon: '🗓', title: 'À la carte', desc: "Week-end, semaine ou sur mesure" },
+            { icon: '😄', title: 'Bonne humeur', desc: "Tous niveaux, ambiance conviviale garantie" },
+          ].map(({ icon, title, desc }) => (
+            <div class="bg-[rgba(255,255,255,0.03)] border border-[var(--color-df-border)] rounded-sm p-5 hover:border-[rgba(192,57,43,0.3)] transition-colors">
+              <span class="text-2xl block mb-3">{icon}</span>
+              <h3 class="df-bebas text-lg mb-1">{title}</h3>
+              <p class="text-[rgba(245,240,232,0.6)] text-xs leading-relaxed">{desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -72,44 +191,49 @@ const locale: Locale = 'fr';
   <!-- ======================================================
        ESPÈCES PHARES
        ====================================================== -->
-  <section class="df-section" aria-label="Espèces phares">
+  <section class="df-section">
     <div class="df-container">
-      <div class="text-center">
-        <span class="df-label">{t(locale, 'species_title')}</span>
-        <h2 class="df-bebas text-[clamp(2rem,5vw,3.6rem)]">{t(locale, 'species_subtitle')}</h2>
+      <div class="text-center mb-12">
+        <span class="df-label">Espèces cibles</span>
+        <h2 class="df-bebas text-[clamp(2rem,5vw,3.8rem)] leading-none">
+          Les carnassiers<br /><span class="text-[var(--color-df-red)]">d'Extremadura</span>
+        </h2>
         <div class="df-divider df-divider-center"></div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-        {SPECIES.slice(0, 3).map((species) => (
-          <article class="bg-[var(--color-df-card)] border border-[var(--color-df-border)] rounded-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.5)] flex flex-col">
-            <div class="overflow-hidden h-[260px]">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {SPECIES.map((species) => (
+          <article class="group relative overflow-hidden rounded-sm border border-[var(--color-df-border)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-df-red)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.6)]">
+            <div class="h-[280px] overflow-hidden">
               <img
                 src={species.image}
                 alt={species.imageAlt}
                 loading="lazy"
-                class="w-full h-full object-cover brightness-80 transition-all duration-500 hover:brightness-90 hover:scale-[1.03]"
+                class="w-full h-full object-cover brightness-70 transition-all duration-500 group-hover:brightness-85 group-hover:scale-[1.05]"
               />
             </div>
-            <div class="p-6 flex flex-col flex-1">
-              <h3 class="df-bebas text-xl mb-2">{species.name[locale]}</h3>
-              <p class="text-sm text-[rgba(245,240,232,0.75)] mb-4 flex-1 line-clamp-3">{species.description[locale]}</p>
-              <div class="flex flex-wrap gap-1.5 mb-4">
+            <!-- Overlay gradient sur image -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[rgba(5,5,5,0.95)] via-[rgba(5,5,5,0.3)] to-transparent"></div>
+            <!-- Contenu par-dessus image -->
+            <div class="absolute bottom-0 left-0 right-0 p-5">
+              <p class="text-[var(--color-df-gold)] text-[0.65rem] tracking-[0.15em] uppercase italic mb-1">{species.latin}</p>
+              <h3 class="df-bebas text-2xl text-white mb-2">{species.name[locale]}</h3>
+              <div class="flex flex-wrap gap-1 mb-3">
                 {species.techniques.slice(0, 2).map(tech => (
-                  <span class="df-tag">{tech}</span>
+                  <span class="text-[0.62rem] px-2 py-0.5 bg-[rgba(192,57,43,0.25)] border border-[rgba(192,57,43,0.4)] text-[rgba(245,240,232,0.85)] rounded-sm uppercase tracking-wider">{tech}</span>
                 ))}
               </div>
-              <a href="/especes" class="inline-flex items-center px-5 py-2.5 border border-[rgba(245,240,232,0.35)] text-[0.8rem] font-semibold tracking-wider uppercase rounded-sm transition-all hover:border-[var(--color-df-cream)] hover:bg-[rgba(245,240,232,0.06)] self-start">
-                {t(locale, 'species_more')}
+              <a href="/especes" class="text-[0.72rem] font-bold tracking-[0.1em] uppercase text-[var(--color-df-red)] hover:text-white transition-colors">
+                En savoir plus →
               </a>
             </div>
           </article>
         ))}
       </div>
 
-      <div class="text-center mt-8">
-        <a href="/especes" class="inline-flex items-center px-8 py-3.5 border border-[rgba(245,240,232,0.35)] text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:border-[var(--color-df-cream)] hover:bg-[rgba(245,240,232,0.06)]">
-          {t(locale, 'species_link')}
+      <div class="text-center mt-10">
+        <a href="/especes" class="inline-flex items-center px-8 py-4 border-2 border-[var(--color-df-red)] text-[var(--color-df-red)] text-sm font-bold tracking-[0.1em] uppercase rounded-sm transition-all hover:bg-[var(--color-df-red)] hover:text-white">
+          Découvrir toutes les espèces
         </a>
       </div>
     </div>
@@ -118,31 +242,71 @@ const locale: Locale = 'fr';
   <!-- ======================================================
        HÉBERGEMENT PREVIEW
        ====================================================== -->
-  <section class="df-section bg-[var(--color-df-card)] border-t border-[var(--color-df-border)]" aria-label="Hébergement">
+  <section class="df-section bg-[var(--color-df-card)] border-t border-[var(--color-df-border)]">
     <div class="df-container">
-      <span class="df-label">{t(locale, 'acc_label')}</span>
-      <div class="grid grid-cols-1 md:grid-cols-2 border border-[var(--color-df-border)] rounded-sm overflow-hidden mt-8">
-        <div class="overflow-hidden h-[400px]">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 border-2 border-[var(--color-df-border)] rounded-sm overflow-hidden hover:border-[rgba(192,57,43,0.3)] transition-colors">
+        <div class="relative overflow-hidden h-[400px]">
           <img
             src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80"
-            alt="Maison de pêcheur au bord du lac en Extremadura"
+            alt="Maison de location au bord du lac en Extremadura"
             loading="lazy"
-            class="w-full h-full object-cover brightness-75"
+            class="w-full h-full object-cover brightness-70"
           />
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent to-[rgba(5,5,5,0.3)]"></div>
         </div>
-        <div class="bg-[#111] p-12 md:p-14 flex flex-col justify-center gap-4">
-          <h2 class="df-bebas text-[clamp(1.8rem,3vw,2.8rem)] leading-none">{t(locale, 'acc_title')}</h2>
-          <div class="df-divider"></div>
-          <p class="text-[rgba(245,240,232,0.8)] max-w-md">{t(locale, 'acc_desc')}</p>
-          <a href="/hebergement" class="self-start mt-2 inline-flex items-center px-8 py-3.5 bg-[var(--color-df-red)] text-white text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:bg-[var(--color-df-red-dark)] hover:-translate-y-px">
-            {t(locale, 'acc_cta')}
+        <div class="bg-[#0e0e0e] p-10 lg:p-14 flex flex-col justify-center gap-5">
+          <span class="df-label">Hébergement</span>
+          <h2 class="df-bebas text-[clamp(2rem,4vw,3rem)] leading-none">
+            Dormez<br /><span class="text-[var(--color-df-red)]">au bord du lac</span>
+          </h2>
+          <div class="w-12 h-0.5 bg-[var(--color-df-red)]"></div>
+          <p class="text-[rgba(245,240,232,0.75)] leading-relaxed">
+            Nos maisons de location sont idéalement situées au bord de l'eau. Réveillez-vous avec le lac devant vous, partez pêcher à l'aube, rentrez vous détendre le soir. L'expérience complète en Extremadura.
+          </p>
+          <ul class="space-y-2">
+            {['Accès direct au lac', 'Disponibilités sur demande', 'Combinable avec séjour guidé'].map(item => (
+              <li class="flex items-center gap-2 text-sm text-[rgba(245,240,232,0.7)]">
+                <span class="w-1.5 h-1.5 bg-[var(--color-df-red)] rounded-full flex-shrink-0"></span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <a href="/hebergement" class="self-start inline-flex items-center gap-2 px-7 py-3.5 bg-[var(--color-df-red)] text-white font-bold tracking-[0.1em] uppercase text-sm rounded-sm transition-all hover:bg-[var(--color-df-red-dark)] hover:-translate-y-0.5">
+            Voir les logements →
           </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- WhatsApp -->
-  <WhatsAppBanner locale={locale} />
+  <!-- ======================================================
+       WHATSAPP CTA — Version améliorée
+       ====================================================== -->
+  <section class="relative py-20 overflow-hidden">
+    <div
+      class="absolute inset-0 bg-cover bg-center"
+      style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=1400&q=80'); filter: brightness(0.25);"
+    ></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-[var(--color-df-black)] via-transparent to-[var(--color-df-black)]"></div>
+    <div class="df-container relative z-10 text-center">
+      <span class="df-label">Contact direct</span>
+      <h2 class="df-bebas text-[clamp(2rem,5vw,4rem)] leading-none mb-3">
+        Une question ?<br />
+        <span class="text-[var(--color-df-red)]">Réservez sur WhatsApp</span>
+      </h2>
+      <p class="text-[rgba(245,240,232,0.7)] max-w-lg mx-auto mb-8">
+        Dini répond rapidement. Posez vos questions, discutez votre séjour et réservez en quelques messages.
+      </p>
+      <a
+        href="https://wa.me/33668178743"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-3 px-10 py-5 bg-[#25D366] text-white font-bold tracking-[0.1em] uppercase text-base rounded-sm transition-all hover:bg-[#1ebe5a] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(37,211,102,0.4)]"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        +33 6 68 17 87 43
+      </a>
+    </div>
+  </section>
 
 </BaseLayout>

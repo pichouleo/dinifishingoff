@@ -1,0 +1,82 @@
+---
+// Logo Dini Fishing — badge circulaire fidèle aux visuels client
+interface Props {
+  size?: number;
+  class?: string;
+}
+const { size = 64, class: cls = '' } = Astro.props;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 120 120"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  class={cls}
+  aria-label="Dini Fishing logo"
+>
+  <!-- Cercle fond noir -->
+  <circle cx="60" cy="60" r="58" fill="#0A0A0A" stroke="#C0392B" stroke-width="2.5"/>
+  <!-- Anneau intérieur décoratif -->
+  <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(192,57,43,0.35)" stroke-width="1"/>
+
+  <!-- Texte "Dini" en haut en italique script -->
+  <text
+    x="60"
+    y="32"
+    text-anchor="middle"
+    font-family="Georgia, serif"
+    font-style="italic"
+    font-size="22"
+    font-weight="700"
+    fill="#F5F0E8"
+    letter-spacing="1"
+  >Dini</text>
+
+  <!-- Ligne décorative sous "Dini" -->
+  <line x1="28" y1="37" x2="92" y2="37" stroke="#C0392B" stroke-width="1.5"/>
+
+  <!-- Silhouette poisson / leurre stylisé -->
+  <g transform="translate(60,62) scale(1)">
+    <!-- Corps du poisson -->
+    <ellipse cx="0" cy="0" rx="18" ry="9" fill="#C0392B" opacity="0.9"/>
+    <!-- Queue -->
+    <polygon points="18,0 26,-7 26,7" fill="#C0392B" opacity="0.9"/>
+    <!-- Nageoire dorsale -->
+    <polygon points="-4,-9 2,-17 8,-9" fill="#C0392B" opacity="0.7"/>
+    <!-- Hameçon -->
+    <path d="M-14,0 Q-22,0 -22,8 Q-22,14 -16,14" stroke="#F5F0E8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <circle cx="-16" cy="14" r="1.5" fill="#F5F0E8"/>
+    <!-- Œil -->
+    <circle cx="-8" cy="-2" r="2.5" fill="#F5F0E8"/>
+    <circle cx="-8" cy="-2" r="1" fill="#0A0A0A"/>
+  </g>
+
+  <!-- Ligne décorative au-dessus de FISHING -->
+  <line x1="22" y1="83" x2="98" y2="83" stroke="#C0392B" stroke-width="1.5"/>
+
+  <!-- Texte "FISHING" en rouge bold -->
+  <text
+    x="60"
+    y="97"
+    text-anchor="middle"
+    font-family="'Bebas Neue', 'Arial Narrow', sans-serif"
+    font-size="20"
+    font-weight="700"
+    fill="#C0392B"
+    letter-spacing="4"
+  >FISHING</text>
+
+  <!-- Texte "EXTREMADURA" en bas en tout petit -->
+  <text
+    x="60"
+    y="111"
+    text-anchor="middle"
+    font-family="'Inter', 'Arial', sans-serif"
+    font-size="7"
+    font-weight="600"
+    fill="rgba(245,240,232,0.5)"
+    letter-spacing="3"
+  >EXTREMADURA</text>
+</svg>
