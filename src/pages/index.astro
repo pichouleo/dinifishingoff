@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WhatsAppBanner from '../components/WhatsAppBanner.astro';
+import { t } from '../lib/i18n';
+import { SPECIES } from '../lib/data';
+import type { Locale } from '../types';
+
+const locale: Locale = 'fr';
+---
+
+<BaseLayout
+  title="Dini Fishing — Guide de pêche aux carnassiers en Extremadura, Espagne"
+  description="Séjours de pêche guidés aux carnassiers en Extremadura, Espagne. Brochet, Black Bass, Sandre, Barbeau Comizo. Location de maisons au bord du lac."
+  locale={locale}
+>
+
+  <!-- ======================================================
+       HERO
+       ====================================================== -->
+  <section class="relative min-h-screen flex items-center overflow-hidden">
+    <div
+      class="absolute inset-0 bg-cover bg-center scale-[1.04] transition-transform duration-[8s] hover:scale-100"
+      style="background-image: url('https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=1800&q=80'); filter: brightness(0.45);"
+    ></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-[rgba(10,10,10,0.3)] via-[rgba(10,10,10,0.1)] to-[rgba(10,10,10,0.8)]"></div>
+    <div class="df-container relative z-10 pt-[72px]">
+      <span class="df-label">Valdecaballeros · Extremadura · España</span>
+      <h1 class="df-bebas text-[clamp(4rem,12vw,9rem)] leading-[0.9] text-white">
+        DINI<br /><span class="text-[var(--color-df-red)]">FISHING</span>
+      </h1>
+      <p class="mt-5 text-[clamp(1rem,2.5vw,1.35rem)] font-light tracking-[0.08em] uppercase text-[rgba(245,240,232,0.85)] max-w-[560px]">
+        {t(locale, 'hero_subtitle')}
+      </p>
+      <div class="flex flex-wrap gap-3 mt-10">
+        <a href="/sejours" class="inline-flex items-center px-8 py-3.5 bg-[var(--color-df-red)] text-white text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:bg-[var(--color-df-red-dark)] hover:-translate-y-px hover:shadow-[0_6px_24px_rgba(192,57,43,0.4)]">
+          {t(locale, 'hero_cta1')}
+        </a>
+        <a href="/contact" class="inline-flex items-center px-8 py-3.5 bg-transparent text-[var(--color-df-cream)] border border-[rgba(245,240,232,0.35)] text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:border-[var(--color-df-cream)] hover:bg-[rgba(245,240,232,0.06)] hover:-translate-y-px">
+          {t(locale, 'hero_cta2')}
+        </a>
+      </div>
+    </div>
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[rgba(245,240,232,0.45)] text-[0.7rem] tracking-[0.2em] uppercase animate-bounce" aria-hidden="true">
+      <span>{t(locale, 'hero_scroll')}</span>
+      <span class="block w-px h-10 bg-gradient-to-b from-[rgba(245,240,232,0.4)] to-transparent"></span>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       ARGUMENTS
+       ====================================================== -->
+  <section class="bg-[var(--color-df-card)] border-t border-b border-[var(--color-df-border)]" aria-label="Nos atouts">
+    <div class="df-container">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-[var(--color-df-border)]">
+        {[
+          { icon: '🌿', titleKey: 'feat1_title' as const, descKey: 'feat1_desc' as const },
+          { icon: '🎣', titleKey: 'feat2_title' as const, descKey: 'feat2_desc' as const },
+          { icon: '🗓',  titleKey: 'feat3_title' as const, descKey: 'feat3_desc' as const },
+          { icon: '😄', titleKey: 'feat4_title' as const, descKey: 'feat4_desc' as const },
+        ].map(({ icon, titleKey, descKey }, i) => (
+          <div class:list={['flex flex-col gap-3 py-10', i > 0 ? 'lg:pl-10' : '']}>
+            <div class="w-12 h-12 bg-[rgba(192,57,43,0.12)] rounded flex items-center justify-center text-xl" aria-hidden="true">{icon}</div>
+            <h3 class="df-bebas text-xl">{t(locale, titleKey)}</h3>
+            <p class="text-sm text-[rgba(245,240,232,0.75)]">{t(locale, descKey)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       ESPÈCES PHARES
+       ====================================================== -->
+  <section class="df-section" aria-label="Espèces phares">
+    <div class="df-container">
+      <div class="text-center">
+        <span class="df-label">{t(locale, 'species_title')}</span>
+        <h2 class="df-bebas text-[clamp(2rem,5vw,3.6rem)]">{t(locale, 'species_subtitle')}</h2>
+        <div class="df-divider df-divider-center"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+        {SPECIES.slice(0, 3).map((species) => (
+          <article class="bg-[var(--color-df-card)] border border-[var(--color-df-border)] rounded-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.5)] flex flex-col">
+            <div class="overflow-hidden h-[260px]">
+              <img
+                src={species.image}
+                alt={species.imageAlt}
+                loading="lazy"
+                class="w-full h-full object-cover brightness-80 transition-all duration-500 hover:brightness-90 hover:scale-[1.03]"
+              />
+            </div>
+            <div class="p-6 flex flex-col flex-1">
+              <h3 class="df-bebas text-xl mb-2">{species.name[locale]}</h3>
+              <p class="text-sm text-[rgba(245,240,232,0.75)] mb-4 flex-1 line-clamp-3">{species.description[locale]}</p>
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                {species.techniques.slice(0, 2).map(tech => (
+                  <span class="df-tag">{tech}</span>
+                ))}
+              </div>
+              <a href="/especes" class="inline-flex items-center px-5 py-2.5 border border-[rgba(245,240,232,0.35)] text-[0.8rem] font-semibold tracking-wider uppercase rounded-sm transition-all hover:border-[var(--color-df-cream)] hover:bg-[rgba(245,240,232,0.06)] self-start">
+                {t(locale, 'species_more')}
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="text-center mt-8">
+        <a href="/especes" class="inline-flex items-center px-8 py-3.5 border border-[rgba(245,240,232,0.35)] text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:border-[var(--color-df-cream)] hover:bg-[rgba(245,240,232,0.06)]">
+          {t(locale, 'species_link')}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       HÉBERGEMENT PREVIEW
+       ====================================================== -->
+  <section class="df-section bg-[var(--color-df-card)] border-t border-[var(--color-df-border)]" aria-label="Hébergement">
+    <div class="df-container">
+      <span class="df-label">{t(locale, 'acc_label')}</span>
+      <div class="grid grid-cols-1 md:grid-cols-2 border border-[var(--color-df-border)] rounded-sm overflow-hidden mt-8">
+        <div class="overflow-hidden h-[400px]">
+          <img
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80"
+            alt="Maison de pêcheur au bord du lac en Extremadura"
+            loading="lazy"
+            class="w-full h-full object-cover brightness-75"
+          />
+        </div>
+        <div class="bg-[#111] p-12 md:p-14 flex flex-col justify-center gap-4">
+          <h2 class="df-bebas text-[clamp(1.8rem,3vw,2.8rem)] leading-none">{t(locale, 'acc_title')}</h2>
+          <div class="df-divider"></div>
+          <p class="text-[rgba(245,240,232,0.8)] max-w-md">{t(locale, 'acc_desc')}</p>
+          <a href="/hebergement" class="self-start mt-2 inline-flex items-center px-8 py-3.5 bg-[var(--color-df-red)] text-white text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:bg-[var(--color-df-red-dark)] hover:-translate-y-px">
+            {t(locale, 'acc_cta')}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WhatsApp -->
+  <WhatsAppBanner locale={locale} />
+
+</BaseLayout>

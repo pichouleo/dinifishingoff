@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { t } from '../lib/i18n';
+import type { Locale } from '../types';
+
+const locale: Locale = 'fr';
+---
+
+<BaseLayout
+  title="Contact — Réserver un séjour pêche — Dini Fishing Extremadura"
+  description="Contactez Dini Fishing par WhatsApp, email ou formulaire. Réservez votre séjour de pêche ou location de maison en Extremadura, Espagne."
+  locale={locale}
+>
+  <div class="mt-[72px]">
+    <PageHero
+      label={t(locale, 'contact_label')}
+      title={t(locale, 'contact_title')}
+      subtitle={t(locale, 'contact_subtitle')}
+      bgImage="https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=1400&q=80"
+    />
+  </div>
+
+  <section class="df-section">
+    <div class="df-container">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-16 items-start">
+
+        <!-- Coordonnées -->
+        <div>
+          <span class="df-label">Coordonnées</span>
+          <h2 class="df-bebas text-[clamp(1.8rem,3vw,2.4rem)] mb-8">Joignez Dini directement</h2>
+
+          {[
+            { icon: '📱', titleKey: 'contact_wa' as const, content: <a href="https://wa.me/33668178743" class="text-[var(--color-df-cream)] hover:text-[var(--color-df-red)] transition-colors">+33 6 68 17 87 43</a>, note: 'Réponse rapide · Recommandé' },
+            { icon: '✉️', titleKey: 'contact_email' as const, content: <a href="mailto:dini.extremadura@hotmail.com" class="text-[var(--color-df-cream)] hover:text-[var(--color-df-red)] transition-colors">dini.extremadura@hotmail.com</a>, note: 'Pour les demandes détaillées' },
+            { icon: '📲', titleKey: 'contact_social' as const, content: <span class="text-[var(--color-df-cream)]">DINI.FISHING</span>, note: 'Facebook & Instagram' },
+            { icon: '📍', titleKey: 'contact_location' as const, content: <span class="text-[var(--color-df-cream)]">{t(locale, 'contact_location_val')}</span>, note: '' },
+          ].map(({ icon, titleKey, content, note }) => (
+            <div class="flex items-start gap-4 py-5 border-b border-[var(--color-df-border)] first:border-t first:border-t-[var(--color-df-border)]">
+              <div class="w-11 h-11 bg-[rgba(192,57,43,0.1)] rounded flex items-center justify-center text-xl flex-shrink-0">{icon}</div>
+              <div>
+                <h4 class="text-[0.75rem] font-semibold tracking-[0.12em] uppercase text-[var(--color-df-gold)] mb-1">{t(locale, titleKey)}</h4>
+                <Fragment set:html={content} />
+                {note && <p class="text-[0.8rem] text-[rgba(245,240,232,0.4)] mt-1">{note}</p>}
+              </div>
+            </div>
+          ))}
+
+          <!-- Map placeholder -->
+          <!-- Google Maps à intégrer ici : remplacer cette div par un iframe Google Maps -->
+          <div class="mt-8 bg-[var(--color-df-card)] border border-[var(--color-df-border)] rounded-sm h-[260px] flex flex-col items-center justify-center gap-2 text-[rgba(245,240,232,0.3)] text-sm">
+            <span class="text-3xl">🗺</span>
+            <span>{t(locale, 'map_placeholder')}</span>
+            <span class="text-xs">{t(locale, 'map_location')}</span>
+          </div>
+        </div>
+
+        <!-- Formulaire Netlify -->
+        <div class="bg-[var(--color-df-card)] border border-[var(--color-df-border)] rounded-sm p-10">
+          <h3 class="df-bebas text-2xl mb-7">{t(locale, 'form_title')}</h3>
+
+          <form
+            name="contact"
+            method="POST"
+            action="/merci"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+            novalidate
+          >
+            <!-- Honeypot -->
+            <p class="hidden"><label>Ne pas remplir : <input name="bot-field" /></label></p>
+            <input type="hidden" name="form-name" value="contact" />
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[0.75rem] font-semibold tracking-[0.1em] uppercase text-[rgba(245,240,232,0.6)]" for="prenom">{t(locale, 'form_firstname')}</label>
+                <input type="text" id="prenom" name="prenom" required placeholder="Jean" class="bg-white/[0.04] border border-[var(--color-df-border)] rounded-sm px-4 py-3 text-[var(--color-df-cream)] text-sm outline-none focus:border-[var(--color-df-red)] transition-colors placeholder:text-white/25" />
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[0.75rem] font-semibold tracking-[0.1em] uppercase text-[rgba(245,240,232,0.6)]" for="nom">{t(locale, 'form_lastname')}</label>
+                <input type="text" id="nom" name="nom" required placeholder="Dupont" class="bg-white/[0.04] border border-[var(--color-df-border)] rounded-sm px-4 py-3 text-[var(--color-df-cream)] text-sm outline-none focus:border-[var(--color-df-red)] transition-colors placeholder:text-white/25" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[0.75rem] font-semibold tracking-[0.1em] uppercase text-[rgba(245,240,232,0.6)]" for="email">{t(locale, 'form_email')}</label>
+                <input type="email" id="email" name="email" required placeholder="jean@exemple.com" class="bg-white/[0.04] border border-[var(--color-df-border)] rounded-sm px-4 py-3 text-[var(--color-df-cream)] text-sm outline-none focus:border-[var(--color-df-red)] transition-colors placeholder:text-white/25" />
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[0.75rem] font-semibold tracking-[0.1em] uppercase text-[rgba(245,240,232,0.6)]" for="tel">{t(locale, 'form_phone')}</label>
+                <input type="tel" id="tel" name="telephone" placeholder="+33 6 00 00 00 00" class="bg-white/[0.04] border border-[var(--color-df-border)] rounded-sm px-4 py-3 text-[var(--color-df-cream)] text-sm outline-none focus:border-[var(--color-df-red)] transition-colors placeholder:text-white/25" />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5 mb-4">
+              <label class="text-[0.75rem] font-semibold tracking-[0.1em] uppercase text-[rgba(245,240,232,0.6)]" for="objet">{t(locale, 'form_subject')}</label>
+              <select id="objet" name="objet" required class="bg-[#1a1a1a] border border-[var(--color-df-border)] rounded-sm px-4 py-3 text-[var(--color-df-cream)] text-sm outline-none focus:border-[var(--color-df-red)] transition-colors">
+                <option value="" disabled selected>Choisir un objet…</option>
+                <option value="sejour-peche">{t(locale, 'form_subj_stay')}</option>
+                <option value="location-maison">{t(locale, 'form_subj_acc')}</option>
+                <option value="renseignement">{t(locale, 'form_subj_info')}</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-1.5 mb-4">
+              <label class="text-[0.75rem] font-semibold tracking-[0.1em] uppercase text-[rgba(245,240,232,0.6)]" for="type-sejour">{t(locale, 'form_stay_type')}</label>
+              <select id="type-sejour" name="type-sejour" class="bg-[#1a1a1a] border border-[var(--color-df-border)] rounded-sm px-4 py-3 text-[var(--color-df-cream)] text-sm outline-none focus:border-[var(--color-df-red)] transition-colors">
+                <option value="" disabled selected>Choisir…</option>
+                <option value="weekend-carnassiers">{t(locale, 'form_stay_wknd')}</option>
+                <option value="mouche">{t(locale, 'form_stay_fly')}</option>
+                <option value="sur-mesure">{t(locale, 'form_stay_custom')}</option>
+                <option value="hebergement">{t(locale, 'form_stay_acc')}</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[0.75rem] font-semibold tracking-[0.1em] uppercase text-[rgba(245,240,232,0.6)]" for="personnes">{t(locale, 'form_persons')}</label>
+                <input type="number" id="personnes" name="personnes" min="1" max="20" placeholder="2" class="bg-white/[0.04] border border-[var(--color-df-border)] rounded-sm px-4 py-3 text-[var(--color-df-cream)] text-sm outline-none focus:border-[var(--color-df-red)] transition-colors placeholder:text-white/25" />
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[0.75rem] font-semibold tracking-[0.1em] uppercase text-[rgba(245,240,232,0.6)]" for="periode">{t(locale, 'form_period')}</label>
+                <input type="text" id="periode" name="periode" placeholder="Ex : Avril 2025" class="bg-white/[0.04] border border-[var(--color-df-border)] rounded-sm px-4 py-3 text-[var(--color-df-cream)] text-sm outline-none focus:border-[var(--color-df-red)] transition-colors placeholder:text-white/25" />
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5 mb-6">
+              <label class="text-[0.75rem] font-semibold tracking-[0.1em] uppercase text-[rgba(245,240,232,0.6)]" for="message">{t(locale, 'form_message')}</label>
+              <textarea id="message" name="message" rows="5" placeholder="Décrivez votre projet de séjour, vos espèces cibles, votre niveau…" class="bg-white/[0.04] border border-[var(--color-df-border)] rounded-sm px-4 py-3 text-[var(--color-df-cream)] text-sm outline-none focus:border-[var(--color-df-red)] transition-colors resize-y min-h-[120px] placeholder:text-white/25"></textarea>
+            </div>
+
+            <button type="submit" class="w-full flex items-center justify-center px-8 py-3.5 bg-[var(--color-df-red)] text-white text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:bg-[var(--color-df-red-dark)] hover:-translate-y-px cursor-pointer">
+              {t(locale, 'form_submit')}
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>

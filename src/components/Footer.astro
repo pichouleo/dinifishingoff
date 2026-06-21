@@ -1,0 +1,106 @@
+---
+import type { Locale } from '../types';
+import { t } from '../lib/i18n';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+---
+
+<footer class="bg-[#050505] border-t border-[var(--color-df-border)] pt-16 pb-8">
+  <div class="df-container">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+
+      <!-- Brand -->
+      <div>
+        <div class="text-xl leading-none mb-3">
+          <span class="font-['Georgia',serif] italic text-[var(--color-df-cream)] text-[1.35rem]">Dini</span
+          ><span class="df-bebas text-[var(--color-df-red)] text-[1.5rem] tracking-widest ml-0.5">FISHING</span>
+        </div>
+        <p class="text-[var(--color-df-gold)] text-sm italic mb-4">{t(locale, 'footer_slogan')}</p>
+        <div class="flex gap-3">
+          <a
+            href="https://facebook.com/DINI.FISHING"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            class="w-9 h-9 bg-[var(--color-df-card)] border border-[var(--color-df-border)] rounded flex items-center justify-center text-base transition-all hover:bg-[var(--color-df-red)] hover:border-[var(--color-df-red)]"
+          >📘</a>
+          <a
+            href="https://instagram.com/DINI.FISHING"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            class="w-9 h-9 bg-[var(--color-df-card)] border border-[var(--color-df-border)] rounded flex items-center justify-center text-base transition-all hover:bg-[var(--color-df-red)] hover:border-[var(--color-df-red)]"
+          >📷</a>
+        </div>
+      </div>
+
+      <!-- Nav -->
+      <div>
+        <h4 class="text-[0.75rem] font-semibold tracking-[0.15em] uppercase text-[var(--color-df-cream)] mb-4">
+          {t(locale, 'footer_nav')}
+        </h4>
+        <ul class="space-y-2">
+          {[
+            { label: t(locale, 'nav_home'), href: '/' },
+            { label: t(locale, 'nav_stays'), href: '/sejours' },
+            { label: t(locale, 'nav_accommodation'), href: '/hebergement' },
+            { label: t(locale, 'nav_species'), href: '/especes' },
+            { label: t(locale, 'nav_gallery'), href: '/galerie' },
+            { label: t(locale, 'nav_blog'), href: '/blog' },
+            { label: t(locale, 'nav_contact'), href: '/contact' },
+          ].map(({ label, href }) => (
+            <li>
+              <a href={href} class="text-[rgba(245,240,232,0.55)] text-sm hover:text-[var(--color-df-cream)] transition-colors">{label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Pages -->
+      <div>
+        <h4 class="text-[0.75rem] font-semibold tracking-[0.15em] uppercase text-[var(--color-df-cream)] mb-4">
+          {t(locale, 'footer_links')}
+        </h4>
+        <ul class="space-y-2">
+          {[
+            { label: 'Week-end Carnassiers', href: '/sejours' },
+            { label: 'Pêche à la Mouche', href: '/sejours' },
+            { label: 'Séjour Sur Mesure', href: '/sejours' },
+            { label: 'Location de maisons', href: '/hebergement' },
+            { label: 'Articles de pêche', href: '/blog' },
+          ].map(({ label, href }) => (
+            <li>
+              <a href={href} class="text-[rgba(245,240,232,0.55)] text-sm hover:text-[var(--color-df-cream)] transition-colors">{label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 class="text-[0.75rem] font-semibold tracking-[0.15em] uppercase text-[var(--color-df-cream)] mb-4">
+          {t(locale, 'footer_contact')}
+        </h4>
+        <div class="space-y-2">
+          <p class="text-[rgba(245,240,232,0.55)] text-sm">📍 {t(locale, 'footer_location')}</p>
+          <p class="text-sm">
+            📱 <a href="https://wa.me/33668178743" class="text-[var(--color-df-gold)] hover:text-[var(--color-df-gold-light)] transition-colors">+33 6 68 17 87 43</a>
+          </p>
+          <p class="text-sm">
+            ✉️ <a href="mailto:dini.extremadura@hotmail.com" class="text-[var(--color-df-gold)] hover:text-[var(--color-df-gold-light)] transition-colors">dini.extremadura@hotmail.com</a>
+          </p>
+          <p class="text-[rgba(245,240,232,0.55)] text-sm">📲 DINI.FISHING</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pt-6 border-t border-[var(--color-df-border)] flex flex-col sm:flex-row justify-between items-center gap-2 text-[0.8rem] text-[rgba(245,240,232,0.3)]">
+      <span>{t(locale, 'footer_rights')}</span>
+      <span>Pêche aux carnassiers · Extremadura · Espagne</span>
+    </div>
+  </div>
+</footer>

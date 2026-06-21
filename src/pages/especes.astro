@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { t, getMonths } from '../lib/i18n';
+import { SPECIES } from '../lib/data';
+import type { Locale } from '../types';
+
+const locale: Locale = 'fr';
+const months = getMonths(locale);
+---
+
+<BaseLayout
+  title="Espèces — Brochet, Black Bass, Sandre, Barbeau Comizo — Dini Fishing Extremadura"
+  description="Pêchez le Brochet, Black Bass, Sandre et Barbeau Comizo en Extremadura, Espagne. Techniques, comportements et meilleures saisons."
+  ogImage="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1200&q=80"
+  locale={locale}
+>
+  <div class="mt-[72px]">
+    <PageHero
+      label={t(locale, 'species_page_label')}
+      title={t(locale, 'species_page_title')}
+      subtitle={t(locale, 'species_page_subtitle')}
+      bgImage="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1400&q=80"
+    />
+  </div>
+
+  <section class="df-section">
+    <div class="df-container space-y-12">
+      {SPECIES.map((species, i) => (
+        <article
+          id={species.id}
+          class:list={[
+            'grid grid-cols-1 md:grid-cols-2 border border-[var(--color-df-border)] rounded-sm overflow-hidden',
+            i % 2 === 1 ? 'md:[direction:rtl]' : '',
+          ]}
+        >
+          <div class="overflow-hidden h-[400px]" style={i % 2 === 1 ? 'direction: ltr;' : ''}>
+            <img
+              src={species.image}
+              alt={species.imageAlt}
+              loading="lazy"
+              class="w-full h-full object-cover brightness-75"
+            />
+          </div>
+          <div class="bg-[var(--color-df-card)] p-10 md:p-12 flex flex-col justify-center gap-4" style={i % 2 === 1 ? 'direction: ltr;' : ''}>
+            <span class="df-label">{species.latin}</span>
+            <h2 class="df-bebas text-[clamp(2rem,4vw,3rem)] leading-none">{species.name[locale]}</h2>
+            <div class="df-divider"></div>
+            <p class="text-[rgba(245,240,232,0.8)]">{species.description[locale]}</p>
+
+            <!-- Techniques -->
+            <div>
+              <p class="text-[0.75rem] font-semibold tracking-[0.1em] uppercase text-[var(--color-df-gold)] mb-2">{t(locale, 'species_techniques')}</p>
+              <div class="flex flex-wrap gap-1.5">
+                {species.techniques.map(tech => <span class="df-tag">{tech}</span>)}
+              </div>
+            </div>
+
+            <!-- Season -->
+            <div>
+              <p class="text-[0.75rem] font-semibold tracking-[0.1em] uppercase text-[var(--color-df-gold)] mb-2">{t(locale, 'species_season')}</p>
+              <div class="flex gap-1 flex-wrap">
+                {months.map((m, idx) => (
+                  <span class:list={[
+                    'px-2.5 py-1 rounded-sm text-[0.72rem] font-semibold tracking-wider uppercase',
+                    species.activeMonths.includes(idx)
+                      ? 'bg-[var(--color-df-red)] text-white'
+                      : 'bg-white/5 text-[rgba(245,240,232,0.35)]',
+                  ]}>{m}</span>
+                ))}
+              </div>
+            </div>
+
+            <a href="/sejours" class="self-start inline-flex items-center px-6 py-3 bg-[var(--color-df-red)] text-white text-[0.8rem] font-semibold tracking-wider uppercase rounded-sm transition-all hover:bg-[var(--color-df-red-dark)] mt-2">
+              {t(locale, 'species_cta_stays')}
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="df-section bg-[var(--color-df-card)] border-t border-[var(--color-df-border)] text-center">
+    <div class="df-container">
+      <span class="df-label">Prêt à partir ?</span>
+      <h2 class="df-bebas text-[clamp(1.8rem,4vw,3rem)]">Pêchez ces espèces avec Dini</h2>
+      <div class="df-divider df-divider-center"></div>
+      <p class="max-w-lg mx-auto text-[rgba(245,240,232,0.75)] mb-8">Que vous cibliez le Black Bass en surface, le Brochet au streamer ou le Barbeau Comizo à la nymphe, Dini vous guide vers les spots et les techniques qui font la différence.</p>
+      <div class="flex gap-3 justify-center flex-wrap">
+        <a href="/sejours" class="inline-flex items-center px-8 py-3.5 bg-[var(--color-df-red)] text-white text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:bg-[var(--color-df-red-dark)]">{t(locale, 'species_cta_stays')}</a>
+        <a href="/contact" class="inline-flex items-center px-8 py-3.5 border border-[rgba(245,240,232,0.35)] text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:border-[var(--color-df-cream)] hover:bg-[rgba(245,240,232,0.06)]">{t(locale, 'species_cta_contact')}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

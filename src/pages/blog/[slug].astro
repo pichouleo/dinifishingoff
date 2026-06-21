@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { t } from '../../lib/i18n';
+import { ARTICLES, getArticleBySlug, getRelatedArticles } from '../../lib/articles';
+import type { Locale } from '../../types';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = () => {
+  return ARTICLES.map((article) => ({
+    params: { slug: article.slug },
+  }));
+};
+
+const { slug } = Astro.params;
+const article = getArticleBySlug(slug as string);
+const related = getRelatedArticles(slug as string, 2);
+const locale: Locale = 'fr';
+
+if (!article) {
+  return Astro.redirect('/blog');
+}
+---
+
+<BaseLayout
+  title={`${article.title} — Dini Fishing`}
+  description={article.excerpt.substring(0, 155)}
+  ogImage={article.image}
+  locale={locale}
+>
+  <!-- Article hero -->
+  <div class="relative h-[480px] overflow-hidden mt-[72px]">
+    <img src={article.image} alt={article.imageAlt} class="w-full h-full object-cover brightness-45" />
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(10,10,10,0.95)]"></div>
+    <div class="absolute bottom-0 left-0 right-0 df-container pb-12">
+      <span class="df-label">{article.category}</span>
+      <h1 class="df-bebas text-[clamp(2rem,5vw,4rem)] text-white leading-none max-w-3xl">{article.title}</h1>
+      <time datetime={article.date} class="text-[var(--color-df-gold)] text-sm mt-2 block">{article.dateLabel}</time>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <article class="max-w-[760px] mx-auto px-6 py-14 df-prose">
+    <Fragment set:html={article.content} />
+
+    <div class="mt-12 pt-8 border-t border-[var(--color-df-border)] flex gap-4 flex-wrap">
+      <a href="/blog" class="inline-flex items-center px-6 py-3 border border-[rgba(245,240,232,0.35)] text-sm font-semibold tracking-wider uppercase rounded-sm hover:border-[var(--color-df-cream)] hover:bg-[rgba(245,240,232,0.06)] transition-all">
+        {t(locale, 'blog_back')}
+      </a>
+      <a href="/contact" class="inline-flex items-center px-6 py-3 bg-[var(--color-df-red)] text-white text-sm font-semibold tracking-wider uppercase rounded-sm hover:bg-[var(--color-df-red-dark)] transition-all">
+        Réserver un séjour
+      </a>
+    </div>
+  </article>
+
+  <!-- Related articles -->
+  {related.length > 0 && (
+    <section class="bg-[var(--color-df-card)] border-t border-[var(--color-df-border)] py-16">
+      <div class="df-container">
+        <span class="df-label">{t(locale, 'blog_related')}</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+          {related.map((rel) => (
+            <article class="bg-[var(--color-df-card)] border border-[var(--color-df-border)] rounded-sm overflow-hidden flex flex-col transition-all hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.4)]">
+              <div class="overflow-hidden h-[200px]">
+                <img src={rel.image} alt={rel.imageAlt} loading="lazy" class="w-full h-full object-cover brightness-80 hover:brightness-95 hover:scale-[1.03] transition-all duration-500" />
+              </div>
+              <div class="p-5 flex flex-col flex-1 gap-2">
+                <span class="text-[0.75rem] text-[var(--color-df-gold)]">{rel.dateLabel}</span>
+                <h3 class="df-bebas text-xl leading-tight">{rel.title}</h3>
+                <a href={`/blog/${rel.slug}`} class="self-start text-[0.8rem] font-semibold uppercase tracking-wider text-[var(--color-df-red)] hover:text-[var(--color-df-cream)] transition-colors mt-auto pt-2">
+                  {t(locale, 'blog_read_more')}
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

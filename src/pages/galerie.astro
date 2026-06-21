@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import WhatsAppBanner from '../components/WhatsAppBanner.astro';
+import { t } from '../lib/i18n';
+import { GALLERY_PHOTOS } from '../lib/data';
+import type { Locale } from '../types';
+
+const locale: Locale = 'fr';
+---
+
+<BaseLayout
+  title="Galerie — Dini Fishing, pêche aux carnassiers en Extremadura"
+  description="Galerie photos de Dini Fishing : lac Extremadura, carnassiers, séjours de pêche guidés en Espagne. Brochet, Black Bass, Sandre."
+  locale={locale}
+>
+  <div class="mt-[72px]">
+    <PageHero
+      label={t(locale, 'gallery_label')}
+      title={t(locale, 'gallery_title')}
+      subtitle={t(locale, 'gallery_subtitle')}
+      bgImage="https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=1400&q=80"
+    />
+  </div>
+
+  <section class="df-section">
+    <div class="df-container">
+      <div class="bg-[rgba(139,115,85,0.1)] border border-[rgba(139,115,85,0.25)] rounded-sm px-5 py-3.5 text-center text-sm text-[var(--color-df-gold)] italic mb-10">
+        {t(locale, 'gallery_notice')}
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0.5">
+        {GALLERY_PHOTOS.map((photo) => (
+          <div
+            class:list={[
+              'relative overflow-hidden bg-[var(--color-df-card)] group',
+              photo.wide ? 'sm:col-span-2' : '',
+            ]}
+            style="aspect-ratio: 4/3;"
+            data-photo-id={photo.id}
+          >
+            <img
+              src={photo.src}
+              alt={photo.alt}
+              loading="lazy"
+              data-src={photo.dataSrc}
+              class="w-full h-full object-cover brightness-80 transition-all duration-500 group-hover:scale-[1.06] group-hover:brightness-100"
+            />
+            <div class="absolute bottom-0 left-0 right-0 px-4 py-3 bg-gradient-to-t from-black/80 to-transparent text-sm text-[rgba(245,240,232,0.85)] translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
+              {photo.caption[locale]}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <WhatsAppBanner locale={locale} />
+</BaseLayout>

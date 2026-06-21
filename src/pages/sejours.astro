@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import WhatsAppBanner from '../components/WhatsAppBanner.astro';
+import { t } from '../lib/i18n';
+import { STAYS } from '../lib/data';
+import type { Locale } from '../types';
+
+const locale: Locale = 'fr';
+---
+
+<BaseLayout
+  title="Séjours de pêche — Dini Fishing, Extremadura"
+  description="Week-end carnassiers, séjour pêche à la mouche ou formule sur mesure en Extremadura. Guide expert, bateau équipé, spots exclusifs."
+  locale={locale}
+>
+  <div class="mt-[72px]">
+    <PageHero
+      label={t(locale, 'stays_label')}
+      title={t(locale, 'stays_title')}
+      subtitle={t(locale, 'stays_subtitle')}
+      bgImage="https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=1400&q=80"
+    />
+  </div>
+
+  <!-- FORMULES -->
+  <section class="df-section">
+    <div class="df-container">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {STAYS.map((stay) => (
+          <article class="bg-[var(--color-df-card)] border border-[var(--color-df-border)] rounded-sm flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_56px_rgba(0,0,0,0.5)]">
+            <div class="p-8 flex flex-col flex-1">
+              <span class="self-start px-3.5 py-1 bg-[var(--color-df-red)] text-white text-[0.7rem] font-bold tracking-[0.12em] uppercase rounded-sm mb-4">
+                {stay.badge[locale]}
+              </span>
+              <h2 class="df-bebas text-2xl mb-2">{stay.title[locale]}</h2>
+              <p class="text-[var(--color-df-gold)] text-sm mb-4">{stay.duration[locale]}</p>
+              <p class="text-sm text-[rgba(245,240,232,0.75)] mb-5 flex-1">{stay.description[locale]}</p>
+              <ul class="space-y-0 mb-6 border-t border-[var(--color-df-border)]">
+                {stay.includes[locale].map(item => (
+                  <li class="flex items-center gap-2 py-2.5 border-b border-[var(--color-df-border)] text-sm text-[rgba(245,240,232,0.75)]">
+                    <span class="text-[var(--color-df-red)] font-bold flex-shrink-0">✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <a href="/contact" class="inline-flex items-center justify-center px-6 py-3.5 bg-[var(--color-df-red)] text-white text-[0.8rem] font-semibold tracking-wider uppercase rounded-sm transition-all hover:bg-[var(--color-df-red-dark)]">
+                {t(locale, 'stay_contact_cta')}
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="text-center mt-10 text-sm text-[rgba(245,240,232,0.4)] italic">{t(locale, 'stays_note')}</p>
+    </div>
+  </section>
+
+  <!-- Espèces cibles -->
+  <section class="df-section bg-[var(--color-df-card)] border-t border-[var(--color-df-border)] text-center">
+    <div class="df-container">
+      <span class="df-label">Espèces cibles</span>
+      <h2 class="df-bebas text-[clamp(1.8rem,4vw,3rem)]">Brochet · Black Bass · Sandre · Barbeau Comizo</h2>
+      <div class="df-divider df-divider-center"></div>
+      <p class="max-w-xl mx-auto text-[rgba(245,240,232,0.75)] mb-8">Quatre espèces emblématiques dans un écrin naturel préservé. L'Extremadura est l'une des rares régions d'Europe où vous pouvez cibler ces carnassiers dans un cadre aussi sauvage.</p>
+      <a href="/especes" class="inline-flex items-center px-8 py-3.5 border border-[rgba(245,240,232,0.35)] text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:border-[var(--color-df-cream)] hover:bg-[rgba(245,240,232,0.06)]">
+        Découvrir les espèces
+      </a>
+    </div>
+  </section>
+
+  <WhatsAppBanner locale={locale} />
+</BaseLayout>

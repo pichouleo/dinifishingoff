@@ -1,0 +1,93 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import type { Locale } from '../types';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  locale?: Locale;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage = 'https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=1200&q=80',
+  locale = 'fr',
+  noindex = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://dinifishing.com');
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={locale === 'fr' ? 'fr_FR' : locale === 'en' ? 'en_GB' : 'es_ES'} />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <Navbar locale={locale} />
+    <main>
+      <slot />
+    </main>
+    <Footer locale={locale} />
+
+    <!-- i18n client-side switcher -->
+    <script>
+      // Persist lang choice and update html[lang] on switch
+      document.addEventListener('DOMContentLoaded', () => {
+        const stored = localStorage.getItem('df_lang');
+        if (stored && stored !== document.documentElement.lang) {
+          // Redirect to same path — Astro i18n handles the rest.
+          // For this static build we reload with a lang param in localStorage only.
+        }
+
+        document.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach((btn) => {
+          const lang = btn.dataset.lang as string;
+          if (lang === document.documentElement.lang) btn.classList.add('active');
+
+          btn.addEventListener('click', () => {
+            localStorage.setItem('df_lang', lang);
+            // Re-apply all data-i18n elements via the inline translations embedded
+            // in each page (see i18n-client.js injected below)
+            window.dispatchEvent(new CustomEvent('df:lang', { detail: lang }));
+            document.documentElement.lang = lang;
+            document.querySelectorAll<HTMLButtonElement>('[data-lang]').forEach((b) =>
+              b.classList.toggle('active', b.dataset.lang === lang)
+            );
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

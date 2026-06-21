@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import WhatsAppBanner from '../components/WhatsAppBanner.astro';
+import { t } from '../lib/i18n';
+import { LODGINGS } from '../lib/data';
+import type { Locale } from '../types';
+
+const locale: Locale = 'fr';
+---
+
+<BaseLayout
+  title="Hébergement au bord du lac — Dini Fishing, Extremadura"
+  description="Location de maisons au bord du lac en Extremadura, Espagne. Idéales pour combiner séjour de pêche et détente. Disponibilités sur demande."
+  locale={locale}
+>
+  <div class="mt-[72px]">
+    <PageHero
+      label={t(locale, 'acc_page_label')}
+      title={t(locale, 'acc_page_title')}
+      subtitle={t(locale, 'acc_page_subtitle')}
+      bgImage="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80"
+    />
+  </div>
+
+  <!-- Intro -->
+  <section class="df-section">
+    <div class="df-container max-w-[720px] mx-auto text-center">
+      <h2 class="df-bebas text-[clamp(1.8rem,4vw,3rem)]">Un cadre exceptionnel, les pieds dans l'eau</h2>
+      <div class="df-divider df-divider-center"></div>
+      <p class="text-[rgba(245,240,232,0.8)]">Imaginez vous réveiller au bord du lac, entouré de la nature sauvage de l'Extremadura, à deux minutes de vos spots de pêche. Nos maisons offrent le confort d'un logement de qualité dans un environnement naturel préservé.</p>
+      <p class="mt-4 text-[var(--color-df-gold)] italic text-sm">{t(locale, 'acc_price_note')}</p>
+    </div>
+  </section>
+
+  <!-- Logements -->
+  <section class="df-section pt-0 bg-[var(--color-df-card)] border-t border-[var(--color-df-border)]">
+    <div class="df-container">
+      <span class="df-label pt-16 block">{t(locale, 'acc_page_label')}</span>
+      <h2 class="df-bebas text-[clamp(1.8rem,4vw,3rem)] mb-12">Maisons disponibles</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {LODGINGS.map((lodging) => (
+          <article
+            class="bg-[var(--color-df-card)] border border-[var(--color-df-border)] rounded-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_56px_rgba(0,0,0,0.5)]"
+            data-lodging-id={lodging.id}
+          >
+            <div class="overflow-hidden h-[280px]">
+              <img
+                src={lodging.image}
+                alt={lodging.imageAlt}
+                loading="lazy"
+                data-src={`assets/images/${lodging.id}.jpg`}
+                class="w-full h-full object-cover brightness-80 transition-all duration-500 hover:brightness-90 hover:scale-[1.03]"
+              />
+            </div>
+            <div class="p-7">
+              <h3 class="df-bebas text-2xl mb-3">{lodging.name}</h3>
+              <div class="flex gap-4 mb-4 flex-wrap">
+                <span class="text-sm text-[var(--color-df-gold)] flex items-center gap-1">👥 {t(locale, 'acc_capacity')} : {lodging.capacity}</span>
+                <span class="text-sm text-[var(--color-df-gold)] flex items-center gap-1">🛏 {lodging.bedrooms} chambres</span>
+                <span class="text-sm text-[var(--color-df-gold)] flex items-center gap-1">📍 Bord du lac</span>
+              </div>
+              <p class="text-sm text-[rgba(245,240,232,0.75)] mb-4">{lodging.description[locale]}</p>
+              <div class="flex flex-wrap gap-1.5 mb-5">
+                {lodging.amenities[locale].map(amenity => (
+                  <span class="df-tag">{amenity}</span>
+                ))}
+              </div>
+              <p class="text-[0.8rem] text-[var(--color-df-gold)] italic mb-4">{t(locale, 'acc_avail')}</p>
+              <a href="/contact" class="inline-flex items-center px-6 py-3 bg-[var(--color-df-red)] text-white text-[0.8rem] font-semibold tracking-wider uppercase rounded-sm transition-all hover:bg-[var(--color-df-red-dark)]">
+                {t(locale, 'acc_cta_contact')}
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="text-center mt-8 text-[0.8rem] text-[rgba(245,240,232,0.3)] italic">
+        📷 Photos provisoires — les vraies photos des logements seront ajoutées prochainement.
+      </p>
+    </div>
+  </section>
+
+  <!-- Combo pêche + hébergement -->
+  <section class="df-section">
+    <div class="df-container">
+      <div class="grid grid-cols-1 md:grid-cols-2 border border-[var(--color-df-border)] rounded-sm overflow-hidden">
+        <div class="overflow-hidden h-[400px]">
+          <img
+            src="https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=900&q=80"
+            alt="Pêche au lever du soleil en Extremadura"
+            loading="lazy"
+            class="w-full h-full object-cover brightness-75"
+          />
+        </div>
+        <div class="bg-[#111] p-12 flex flex-col justify-center gap-4">
+          <span class="df-label">Le combo parfait</span>
+          <h2 class="df-bebas text-[clamp(1.5rem,3vw,2.4rem)] leading-none">{t(locale, 'acc_combo_title')}</h2>
+          <div class="df-divider"></div>
+          <p class="text-[rgba(245,240,232,0.8)]">{t(locale, 'acc_combo_desc')}</p>
+          <a href="/sejours" class="self-start mt-2 inline-flex items-center px-8 py-3.5 bg-[var(--color-df-red)] text-white text-sm font-semibold tracking-wider uppercase rounded-sm transition-all hover:bg-[var(--color-df-red-dark)] hover:-translate-y-px">
+            {t(locale, 'acc_combo_cta')}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <WhatsAppBanner locale={locale} />
+</BaseLayout>

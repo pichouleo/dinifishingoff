@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import WhatsAppBanner from '../../components/WhatsAppBanner.astro';
+import { t } from '../../lib/i18n';
+import { ARTICLES } from '../../lib/articles';
+import type { Locale } from '../../types';
+
+const locale: Locale = 'fr';
+---
+
+<BaseLayout
+  title="Articles — Conseils pêche en Extremadura — Dini Fishing"
+  description="Conseils, techniques et récits de pêche aux carnassiers en Extremadura, Espagne. Black Bass, Brochet, pêche à la mouche avec Dini Fishing."
+  ogImage="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&q=80"
+  locale={locale}
+>
+  <div class="mt-[72px]">
+    <PageHero
+      label={t(locale, 'blog_label')}
+      title={t(locale, 'blog_title')}
+      subtitle={t(locale, 'blog_subtitle')}
+      bgImage="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1400&q=80"
+    />
+  </div>
+
+  <section class="df-section">
+    <div class="df-container">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {ARTICLES.map((article) => (
+          <article class="bg-[var(--color-df-card)] border border-[var(--color-df-border)] rounded-sm overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.4)]">
+            <div class="overflow-hidden h-[220px]">
+              <img
+                src={article.image}
+                alt={article.imageAlt}
+                loading="lazy"
+                class="w-full h-full object-cover brightness-80 transition-all duration-500 hover:brightness-95 hover:scale-[1.03]"
+              />
+            </div>
+            <div class="p-6 flex flex-col flex-1 gap-2">
+              <span class="text-[0.75rem] text-[var(--color-df-gold)] tracking-wider">
+                {article.dateLabel} · {article.category}
+              </span>
+              <h2 class="df-bebas text-[1.3rem] leading-tight">{article.title}</h2>
+              <p class="text-[0.875rem] text-[rgba(245,240,232,0.65)] flex-1 line-clamp-3">{article.excerpt}</p>
+              <a
+                href={`/blog/${article.slug}`}
+                class="self-start mt-2 text-[0.8rem] font-semibold tracking-wider uppercase text-[var(--color-df-red)] hover:text-[var(--color-df-cream)] transition-colors"
+              >
+                {t(locale, 'blog_read_more')}
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Pagination statique V1 -->
+      <nav class="flex justify-center gap-2 mt-12" aria-label="Pagination">
+        <span class="w-10 h-10 flex items-center justify-center bg-[var(--color-df-red)] border border-[var(--color-df-red)] rounded-sm text-white text-sm" aria-current="page">1</span>
+        <a href="#" class="w-10 h-10 flex items-center justify-center border border-[var(--color-df-border)] rounded-sm text-sm hover:border-[var(--color-df-red)] hover:text-[var(--color-df-red)] transition-colors">2</a>
+        <a href="#" class="w-10 h-10 flex items-center justify-center border border-[var(--color-df-border)] rounded-sm text-sm hover:border-[var(--color-df-red)] hover:text-[var(--color-df-red)] transition-colors" aria-label="Page suivante">→</a>
+      </nav>
+    </div>
+  </section>
+
+  <WhatsAppBanner locale={locale} />
+</BaseLayout>
