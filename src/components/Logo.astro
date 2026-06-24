@@ -1,5 +1,6 @@
 ---
-// Logo Dini Fishing — badge circulaire fidèle aux visuels client
+// Logo Dini Fishing — badge circulaire inspiré du logo client
+// Canne en arc, poisson sautant, typographie Dini / FISHING
 interface Props {
   size?: number;
   class?: string;
@@ -10,73 +11,143 @@ const { size = 64, class: cls = '' } = Astro.props;
 <svg
   width={size}
   height={size}
-  viewBox="0 0 120 120"
+  viewBox="0 0 200 200"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
   class={cls}
   aria-label="Dini Fishing logo"
 >
-  <!-- Cercle fond noir -->
-  <circle cx="60" cy="60" r="58" fill="#0A0A0A" stroke="#C0392B" stroke-width="2.5"/>
-  <!-- Anneau intérieur décoratif -->
-  <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(192,57,43,0.35)" stroke-width="1"/>
+  <!-- Fond noir principal -->
+  <circle cx="100" cy="100" r="98" fill="#080808"/>
 
-  <!-- Texte "Dini" en haut en italique script -->
+  <!-- Anneau extérieur blanc/gris (comme sur le logo référence) -->
+  <circle cx="100" cy="100" r="98" fill="none" stroke="#CCCCCC" stroke-width="3"/>
+  <!-- Anneau intérieur fin -->
+  <circle cx="100" cy="100" r="91" fill="none" stroke="rgba(200,200,200,0.25)" stroke-width="1"/>
+
+  <!-- ===================== CANNE À PÊCHE EN ARC ===================== -->
+  <!-- Arc principal de la canne (de bas-gauche vers haut-droite) -->
+  <path
+    d="M 30,165 Q 20,80 90,22"
+    stroke="#BBBBBB"
+    stroke-width="2.5"
+    fill="none"
+    stroke-linecap="round"
+  />
+  <!-- Anneaux de la canne (guides) -->
+  <circle cx="38" cy="145" r="3.5" fill="none" stroke="#AAAAAA" stroke-width="1.5"/>
+  <circle cx="47" cy="120" r="3" fill="none" stroke="#AAAAAA" stroke-width="1.5"/>
+  <circle cx="60" cy="96" r="2.5" fill="none" stroke="#AAAAAA" stroke-width="1.5"/>
+  <circle cx="73" cy="74" r="2" fill="none" stroke="#AAAAAA" stroke-width="1.5"/>
+  <circle cx="87" cy="56" r="1.8" fill="none" stroke="#AAAAAA" stroke-width="1.2"/>
+
+  <!-- Fil de pêche depuis le bout de la canne vers le poisson -->
+  <path
+    d="M 90,22 Q 160,30 168,95"
+    stroke="#AAAAAA"
+    stroke-width="1"
+    fill="none"
+    stroke-linecap="round"
+    stroke-dasharray="none"
+    opacity="0.7"
+  />
+
+  <!-- ===================== POISSON SAUTANT ===================== -->
+  <g transform="translate(130, 105) rotate(-30)">
+    <!-- Corps principal du poisson (forme dynamique) -->
+    <path
+      d="M -40,0 C -30,-22 10,-28 30,-12 C 42,-4 44,10 36,18 C 24,28 -10,26 -30,14 Z"
+      fill="#8B1A1A"
+    />
+    <!-- Ventre plus clair -->
+    <path
+      d="M -36,4 C -28,-10 8,-16 26,-4 C 34,2 36,12 28,18 C 16,24 -12,20 -30,10 Z"
+      fill="#C0392B"
+      opacity="0.85"
+    />
+    <!-- Queue (fourchue) -->
+    <path
+      d="M 30,-12 L 48,-26 L 44,-8 Z"
+      fill="#8B1A1A"
+    />
+    <path
+      d="M 30,14 L 50,22 L 44,6 Z"
+      fill="#8B1A1A"
+    />
+    <!-- Nageoire dorsale -->
+    <path
+      d="M -10,-16 C 0,-34 16,-32 24,-20"
+      fill="none"
+      stroke="#C0392B"
+      stroke-width="7"
+      stroke-linecap="round"
+    />
+    <path
+      d="M -10,-16 C 0,-32 16,-30 24,-20"
+      fill="#7A1515"
+      stroke="none"
+      opacity="0.7"
+    />
+    <!-- Nageoire pectorale -->
+    <path
+      d="M -8,6 C -16,16 -6,22 4,14"
+      fill="#A02020"
+      opacity="0.8"
+    />
+    <!-- Œil -->
+    <circle cx="-24" cy="-2" r="5" fill="#F0E8D8"/>
+    <circle cx="-24" cy="-2" r="2.5" fill="#1A1A1A"/>
+    <circle cx="-23" cy="-3" r="1" fill="rgba(255,255,255,0.6)"/>
+    <!-- Ligne latérale -->
+    <path
+      d="M -30,4 Q 0,0 28,2"
+      stroke="#7A1515"
+      stroke-width="1"
+      fill="none"
+      opacity="0.6"
+    />
+    <!-- Écailles (arcs) -->
+    <path d="M -10,2 Q -6,-4 -2,2" stroke="#7A1515" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <path d="M 2,0 Q 6,-6 10,0" stroke="#7A1515" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <path d="M 12,-2 Q 16,-8 20,-2" stroke="#7A1515" stroke-width="0.8" fill="none" opacity="0.5"/>
+  </g>
+
+  <!-- ===================== HAMEÇON ===================== -->
+  <g transform="translate(167,94)">
+    <path
+      d="M 0,0 Q 8,0 8,8 Q 8,16 2,16"
+      stroke="#AAAAAA"
+      stroke-width="1.8"
+      fill="none"
+      stroke-linecap="round"
+    />
+    <!-- Ardillon -->
+    <path d="M 2,16 L -2,12" stroke="#AAAAAA" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- ===================== TEXTE "Dini" ===================== -->
   <text
-    x="60"
-    y="32"
+    x="54"
+    y="72"
     text-anchor="middle"
-    font-family="Georgia, serif"
+    font-family="Georgia, 'Times New Roman', serif"
     font-style="italic"
-    font-size="22"
+    font-size="34"
     font-weight="700"
-    fill="#F5F0E8"
+    fill="#FFFFFF"
     letter-spacing="1"
   >Dini</text>
 
-  <!-- Ligne décorative sous "Dini" -->
-  <line x1="28" y1="37" x2="92" y2="37" stroke="#C0392B" stroke-width="1.5"/>
-
-  <!-- Silhouette poisson / leurre stylisé -->
-  <g transform="translate(60,62) scale(1)">
-    <!-- Corps du poisson -->
-    <ellipse cx="0" cy="0" rx="18" ry="9" fill="#C0392B" opacity="0.9"/>
-    <!-- Queue -->
-    <polygon points="18,0 26,-7 26,7" fill="#C0392B" opacity="0.9"/>
-    <!-- Nageoire dorsale -->
-    <polygon points="-4,-9 2,-17 8,-9" fill="#C0392B" opacity="0.7"/>
-    <!-- Hameçon -->
-    <path d="M-14,0 Q-22,0 -22,8 Q-22,14 -16,14" stroke="#F5F0E8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <circle cx="-16" cy="14" r="1.5" fill="#F5F0E8"/>
-    <!-- Œil -->
-    <circle cx="-8" cy="-2" r="2.5" fill="#F5F0E8"/>
-    <circle cx="-8" cy="-2" r="1" fill="#0A0A0A"/>
-  </g>
-
-  <!-- Ligne décorative au-dessus de FISHING -->
-  <line x1="22" y1="83" x2="98" y2="83" stroke="#C0392B" stroke-width="1.5"/>
-
-  <!-- Texte "FISHING" en rouge bold -->
+  <!-- ===================== TEXTE "FISHING" ===================== -->
   <text
-    x="60"
-    y="97"
+    x="62"
+    y="104"
     text-anchor="middle"
-    font-family="'Bebas Neue', 'Arial Narrow', sans-serif"
-    font-size="20"
-    font-weight="700"
+    font-family="'Bebas Neue', 'Arial Narrow', Impact, sans-serif"
+    font-size="36"
+    font-weight="900"
     fill="#C0392B"
-    letter-spacing="4"
-  >FISHING</text>
-
-  <!-- Texte "EXTREMADURA" en bas en tout petit -->
-  <text
-    x="60"
-    y="111"
-    text-anchor="middle"
-    font-family="'Inter', 'Arial', sans-serif"
-    font-size="7"
-    font-weight="600"
-    fill="rgba(245,240,232,0.5)"
     letter-spacing="3"
-  >EXTREMADURA</text>
+    font-style="italic"
+  >FISHING</text>
 </svg>

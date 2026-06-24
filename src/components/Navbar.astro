@@ -42,6 +42,7 @@ const current = Astro.url.pathname;
       {links.map(({ key, href }) => (
         <a
           href={href}
+          data-i18n={key}
           class:list={[
             'text-[0.76rem] font-semibold tracking-[0.12em] uppercase transition-colors duration-200 relative pb-0.5',
             'after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-[var(--color-df-red)] after:scale-x-0 after:transition-transform after:duration-200',
@@ -82,6 +83,7 @@ const current = Astro.url.pathname;
       </a>
       <a
         href="/contact"
+        data-i18n="nav_book"
         class="inline-flex items-center px-5 py-2.5 bg-[var(--color-df-red)] text-white text-[0.75rem] font-bold tracking-[0.1em] uppercase rounded-sm transition-all hover:bg-[var(--color-df-red-dark)] hover:-translate-y-px hover:shadow-[0_4px_20px_rgba(192,57,43,0.5)]"
       >
         {t(locale, 'nav_book')}
@@ -112,6 +114,7 @@ const current = Astro.url.pathname;
   {links.map(({ key, href }) => (
     <a
       href={href}
+      data-i18n={key}
       class="py-3.5 text-[0.875rem] font-semibold tracking-[0.12em] uppercase text-[rgba(245,240,232,0.75)] border-b border-white/5 hover:text-white hover:pl-2 transition-all"
     >{t(locale, key)}</a>
   ))}
